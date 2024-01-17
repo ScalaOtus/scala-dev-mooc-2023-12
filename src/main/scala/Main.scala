@@ -4,7 +4,8 @@ object Main {
 
   def main(args: Array[String]): Unit = {
     //hof
-    opt
+    //opt
+    list
 
   }
 }

@@ -314,7 +314,18 @@ object hof{
     */
 
     trait List[+T]{
-      def ::[TT >: T](elem: TT): List[TT] = ???
+      def ::[TT >: T](elem: TT): List[TT] = List.::(elem, this)
+
+      def mkString(sep: String): String = {
+        @tailrec
+        def loop(lst: List[T], acc: StringBuilder): StringBuilder = lst match {
+          case List.Nil => acc
+          case List.::(head, List.Nil) => loop(List.Nil, acc.append(head.toString))
+          case List.::(head, tail) => loop(tail, acc.append(head.toString).append(sep))
+        }
+
+        loop(this, new StringBuilder()).toString()
+      }
     }
 
     object List{
@@ -327,6 +338,14 @@ object hof{
 
     val l1: List[Int] = List(1, 2, 3)
     val l2: List[Int] = 1 :: 2 :: 3 :: List.Nil
+
+    println(l1)
+    println(l2)
+
+    println(l1.mkString("-"))
+
+    val l3: List[String] = List("foo", "bar", "baz")
+    println(l3.mkString(", "))
 
 
 
