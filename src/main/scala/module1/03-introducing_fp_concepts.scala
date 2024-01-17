@@ -228,6 +228,21 @@ object hof{
       case None => None
     }
 
+    def printIfAny(): Unit = this match {
+      case Some(v) => println(v)
+      case None =>
+    }
+
+    def zip[B](b: Option[B]): Option[(T, B)] = this match {
+      case Some(v) if !b.isEmpty => Option((v, b.get))
+      case _ => None
+    }
+
+    def filter(p: T => Boolean): Option[T] = this match {
+      case Some(v) if p(v) => Option(v)
+      case _ => None
+    }
+
   }
 
   case class Some[V](v: V) extends Option[V]
@@ -241,6 +256,25 @@ object hof{
 
   val o1: Option[Int] = Option(1)
   o1.isEmpty // false
+
+  o1.printIfAny()
+
+  val o2: Option[Nothing] = None
+  o2.printIfAny()
+
+  val o3 = Option("Str")
+
+  val zipped1 = o1.zip(o3)
+  val zipped2 = o1.zip(o2)
+  println(s"Zipped values: $zipped1")
+  println(s"Not zipped values: $zipped2")
+
+  var filtered1: Option[Int] = o1.filter(_ > 0)
+  println(filtered1)
+
+  val o4: Option[Int] = None
+  val filtered4: Option[Int] = o4.filter(_ > 100)
+  println(filtered4)
 
 
 

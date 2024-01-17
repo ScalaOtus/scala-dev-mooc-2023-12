@@ -1,9 +1,10 @@
-import module1.{hof, type_system}
+import module1.{hof, list, opt, type_system}
 
 object Main {
 
   def main(args: Array[String]): Unit = {
-    hof
+    //hof
+    opt
 
   }
 }
