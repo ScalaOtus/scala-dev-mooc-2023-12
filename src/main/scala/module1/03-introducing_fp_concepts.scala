@@ -346,6 +346,19 @@ object hof{
 
         loop(this, List.Nil).reverse()
       }
+
+      def filter(p: T => Boolean): List[T] = {
+        @tailrec
+        def loop(lst: List[T], acc: List[T]): List[T] = lst match {
+          case List.Nil => acc
+          case List.::(head, tail) if p(head) => loop(tail, head :: acc)
+          case List.::(_, tail) => loop(tail, acc)
+        }
+
+        loop(this, List.Nil).reverse()
+      }
+
+      def shoutString(suffix: String = "!"): List[String] = this.map(_ + suffix)
     }
 
     object List{
@@ -370,6 +383,10 @@ object hof{
     println(l3.reverse().mkString(", "))
 
     println(l1.map(_ * 10).mkString(", "))
+
+    println(l1.filter(_ % 2 != 0).mkString(", "))
+
+    println(l3.shoutString().mkString(", "))
 
 
 
