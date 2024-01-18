@@ -326,6 +326,26 @@ object hof{
 
         loop(this, new StringBuilder()).toString()
       }
+
+      def reverse(): List[T] = {
+        @tailrec
+        def loop(lst: List[T], acc: List[T]): List[T] = lst match {
+          case List.Nil => acc
+          case List.::(head, tail) => loop(tail, head :: acc)
+        }
+
+        loop(this, List.Nil)
+      }
+
+      def map[B](f: T => B): List[B] = {
+        @tailrec
+        def loop(lst: List[T], acc: List[B]): List[B] = lst match {
+          case List.Nil => acc
+          case List.::(head, tail) => loop(tail, f(head) :: acc)
+        }
+
+        loop(this, List.Nil).reverse()
+      }
     }
 
     object List{
@@ -346,6 +366,10 @@ object hof{
 
     val l3: List[String] = List("foo", "bar", "baz")
     println(l3.mkString(", "))
+
+    println(l3.reverse().mkString(", "))
+
+    println(l1.map(_ * 10).mkString(", "))
 
 
 
