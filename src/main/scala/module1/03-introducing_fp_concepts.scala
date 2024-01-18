@@ -358,7 +358,6 @@ object hof{
         loop(this, List.Nil).reverse()
       }
 
-      def shoutString(suffix: String = "!"): List[String] = this.map(_ + suffix)
     }
 
     object List{
@@ -367,6 +366,10 @@ object hof{
 
       def apply[A](v: A*): List[A] =
         if(v.isEmpty) List.Nil else new ::(v.head, apply(v.tail:_*))
+
+      def incList(lst: List[Int], num: Int = 1): List[Int] = lst.map(_ + num)
+
+      def shoutString(lst: List[String], suffix: String = "!"): List[String] = lst.map(_ + suffix)
     }
 
     val l1: List[Int] = List(1, 2, 3)
@@ -386,7 +389,9 @@ object hof{
 
     println(l1.filter(_ % 2 != 0).mkString(", "))
 
-    println(l3.shoutString().mkString(", "))
+    println(List.incList(l1, 1000).mkString(", "))
+
+    println(List.shoutString(l3, "!!!").mkString(", "))
 
 
 
