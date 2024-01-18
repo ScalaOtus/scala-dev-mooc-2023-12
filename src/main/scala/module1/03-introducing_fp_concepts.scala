@@ -4,6 +4,7 @@ import java.util.UUID
 import scala.annotation.tailrec
 import java.time.Instant
 import scala.language.postfixOps
+import scala.util.control.TailCalls.{TailRec, done}
 
 
 
@@ -83,7 +84,19 @@ object recursion {
    * F0 = 0, F1 = 1, Fn = Fn-1 + Fn - 2
    *
    */
+  def fib(n: Int): Int = {
 
+    def loop(n: Int, acc: Int): TailRec[Int] = n match {
+      case n if n <= 2 => done(1)
+      case n =>
+        for {
+          r <- loop(n - 1, acc)
+          l <- loop(n - 2, acc)
+        } yield r + l
+    }
+    loop(n, 0).result
+  }
+  println(fib(5))
 
 }
 
