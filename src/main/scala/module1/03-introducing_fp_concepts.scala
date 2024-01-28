@@ -101,7 +101,7 @@ object hof{
     result
   }
 
-  def doomy(str: String) = {
+  def doomy(str: String): Unit = {
     Thread.sleep(1000)
     println(str)
   }
